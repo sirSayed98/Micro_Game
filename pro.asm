@@ -2,11 +2,13 @@
     .MODEL COMPAT
 	.STACK 64
 	.DATA
-    WIDTH EQU 320
-	HEIGHT EQU 195
+    WIDTH EQU 200
+	HEIGHT EQU 300
 	Data_F DB WIDTH*HEIGHT dup(0)
-	Filename DB 'DRAW.bin', 0
+	Teacher DB 'teacher.bin', 0
+	Policer DB 'police.bin',0
 	Filehandle DW ?
+
 	.CODE
 	 ; __  __     _     ___   _  _ 
 	 ;|  \/  |   /_\   |_ _| | \| |
@@ -28,13 +30,19 @@
 		MOV BX,105H ; 1024*786 256 COLORS
 		INT 10H 
 		
-		OpenFile Filename,Filehandle
+		OpenFile Teacher,Filehandle
 		ReadData Filehandle,Data_F,WIDTH,HEIGHT
 		LEA BX , Data_F
 		Draw BX,WIDTH,HEIGHT,0,0
 
     MOV AH , 0
     INT 16h
+
+	    OpenFile Policer,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		Draw BX,WIDTH,HEIGHT,0,0
+
     
 CloseFile Filehandle
 
