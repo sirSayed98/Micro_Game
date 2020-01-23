@@ -1,12 +1,17 @@
 	INCLUDE MACROS.inc
     .MODEL COMPAT
 	.STACK 64
+	.386
 	.DATA
     WIDTH EQU 200
 	HEIGHT EQU 300
 	Data_F DB WIDTH*HEIGHT dup(0)
 	Teacher DB 'teacher.bin', 0
 	Policer DB 'police.bin',0
+	Doctor  DB 'doctor.bin',0
+	Soldier db 'soldier.bin',0
+	Lawyer db 'lawyer.bin',0
+
 	Filehandle DW ?
 	Jops DB 'Teacher','Policer','Doctor','Soldier','Lawyer','Player','Actor'
 	Guess_who     db 'Guess Who .....?'
@@ -48,8 +53,6 @@
 		Print Teacher_Jop,81,27,3,04
 		Print Teacher_Jop_c,84,27,5,04
 		Print Guess_who,16,65,8,14
-	   
-
          MOV AH , 0
          INT 16h
 
@@ -61,14 +64,80 @@
 ;  | |__| | | |      | |      | | | (__  |  __/ | |   
 ;   \____/  |_|      |_|      |_|  \___|  \___| |_|  
 		call Video_mode
-	    OpenFile Policer,Filehandle
+		OpenFile Policer,Filehandle
 		ReadData Filehandle,Data_F,WIDTH,HEIGHT
 		LEA BX , Data_F
-		CloseFile Filehandle
 		Draw BX,WIDTH,HEIGHT,0,0
-		 MOV AH , 0
-    INT 16h
-    
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h
+
+;  _____                   _                  
+;  |  __ \                 | |                 
+;  | |  | |   ___     ___  | |_    ___    _ __ 
+;  | |  | |  / _ \   / __| | __|  / _ \  | '__|
+;  | |__| | | (_) | | (__  | |_  | (_) | | |   
+;  |_____/   \___/   \___|  \__|  \___/  |_|  
+        call Video_mode
+	    OpenFile Doctor,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		pusha
+		Draw BX,WIDTH,HEIGHT,0,0
+		popa 
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h 
+
+;   _____       _     _ _           
+;  / ____|     | |   | (_)          
+; | (___   ___ | | __| |_  ___ _ __ 
+;  \___ \ / _ \| |/ _` | |/ _ \ '__|
+;  ____) | (_) | | (_| | |  __/ |   
+; |_____/ \___/|_|\__,_|_|\___|_| 
+
+        call Video_mode
+		OpenFile Soldier,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		Draw BX,WIDTH,HEIGHT,0,0
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h
+;   _                                               
+;  | |                                              
+;  | |        __ _  __      __  _   _    ___   _ __ 
+;  | |       / _` | \ \ /\ / / | | | |  / _ \ | '__|
+;  | |____  | (_| |  \ V  V /  | |_| | |  __/ | |   
+;  |______|  \__,_|   \_/\_/    \__, |  \___| |_|   
+;                                __/ |              
+;                               |___/               
+        call Video_mode
+		OpenFile Lawyer,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		Draw BX,WIDTH,HEIGHT,0,0
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h
+
+                                             
+                                             
+
+
+
 
 
 Video_mode PROC
