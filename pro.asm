@@ -11,7 +11,7 @@
 	Doctor  DB 'doctor.bin',0
 	Soldier db 'soldier.bin',0
 	Lawyer db 'lawyer.bin',0
-
+    Player db 'player.bin',0
 	Filehandle DW ?
 	Jops DB 'Teacher','Policer','Doctor','Soldier','Lawyer','Player','Actor'
 	Guess_who     db 'Guess Who .....?'
@@ -132,6 +132,29 @@
 		Print Guess_who,16,65,8,14
          MOV AH , 0
          INT 16h
+
+;   _____    _                               
+;  |  __ \  | |                              
+;  | |__) | | |   __ _   _   _    ___   _ __ 
+;  |  ___/  | |  / _` | | | | |  / _ \ | '__|
+;  | |      | | | (_| | | |_| | |  __/ | |   
+;  |_|      |_|  \__,_|  \__, |  \___| |_|   
+;                         __/ |              
+;                        |___/               
+        call Video_mode
+		OpenFile Player,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		pusha
+		Draw BX,WIDTH,HEIGHT,0,0
+		popa
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h 
+
 
                                              
                                              
