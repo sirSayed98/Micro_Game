@@ -12,29 +12,52 @@
 ;         \/     \/     \/    /_____/       \/     \/          \/ 
    
 
-  Learn         db 'L E A R N  B Y  P I C T U R E','$'
-
+   Learn         db 'L E A R N  B Y  P I C T U R E','$'
    Learn_Jops    db '1-Learn Jops','$'
    Learn_Animals db '2-Learn Animals','$'
    
 
 
-    WIDTH EQU 200
+    WIDTH  EQU 200
 	HEIGHT EQU 300
 	Data_F DB WIDTH*HEIGHT dup(0)
-	Teacher DB 'teacher.bin', 0
+	Filehandle DW ?
+; 	 ____.________ __________  _________
+;     |    |\_____  \\______   \/   _____/
+;     |    | /   |   \|     ___/\_____  \ 
+; /\__|    |/    |    \    |    /        \
+; \________|\_______  /____|   /_______  /
+;                   \/                 \/ 
+; 	
+    Jops DB 'Teacher','Policer','Doctor','Soldier','Lawyer','Player','Actor'
+	Teacher_Jop   db 'I help people to learn,work in a classroom.I teach young children in kindergarten'
+    Teacher_Jop_c db 'and primary schools. I teach older children in middle, junior high and high schools.'
+     
+    Teacher DB 'teacher.bin', 0
 	Policer DB 'police.bin',0
 	Doctor  DB 'doctor.bin',0
 	Soldier db 'soldier.bin',0
 	Lawyer db 'lawyer.bin',0
     Player db 'player.bin',0
 	Actor  db 'actor.bin',0
-	Filehandle DW ?
-	Jops DB 'Teacher','Policer','Doctor','Soldier','Lawyer','Player','Actor'
+;    .__          
+;   /  _  \   ____ |__| _____ _____  |  |   ______
+;  /  /_\  \ /    \|  |/     \\__  \ |  |  /  ___/
+; /    |    \   |  \  |  Y Y  \/ __ \|  |__\___ \ 
+; \____|__  /___|  /__|__|_|  (____  /____/____  >
+;         \/     \/         \/     \/          \/ 
+    Animals DB 'Lion','Bear','Elephant','Monkey','Horse','Zebra','Camel'
+    Lion DB 'Lion.bin', 0
+    Bear DB 'Bear.bin', 0
+
+; ________                                       
+; \_   ___ \  ____   _____   _____   ____   ____  
+; /    \  \/ /  _ \ /     \ /     \ /  _ \ /    \ 
+; \     \___(  <_> )  Y Y  \  Y Y  (  <_> )   |  \
+;  \______  /\____/|__|_|  /__|_|  /\____/|___|  /
+;         \/             \/      \/            \/ 
 	Guess_who     db 'Guess Who .....?'
-	Teacher_Jop   db 'I help people to learn,work in a classroom.I teach young children in kindergarten'
-    Teacher_Jop_c db 'and primary schools. I teach older children in middle, junior high and high schools.'
-                    
+	               
 
 	.CODE
 	 ; __  __     _     ___   _  _ 
@@ -238,12 +261,35 @@
          INT 16h 
 
 
-		 
-Animals_MODE: 
-  call Video_mode
-  mov ah,0
-  int 16h
 
+Animals_MODE: 
+        call Video_mode
+		OpenFile Lion,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		pusha
+		Draw BX,WIDTH,HEIGHT,0,0
+		popa
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h
+
+		call Video_mode
+		OpenFile Bear,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		pusha
+		Draw BX,WIDTH,HEIGHT,0,0
+		popa
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h
                                              
                                              
 
