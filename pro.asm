@@ -41,7 +41,10 @@
 	Doctor_Jop_c  db 'restore human health through the practice of medicine and they examine patients.'
 
 	Soldier_Jop   db 'He is a person who serves in the army the branch of armed forces '
-	Soldier_Jop_c db ' trained for land warfare.They perform duties such as maintaining military equipment.'       
+	Soldier_Jop_c db ' trained for land warfare.They perform duties such as maintaining military equipment.'
+
+	Lawyer_Jop db 'They, also known as Attorneys, are certified professionals who advise and represent natural'
+	Lawyer_Jop_c db 'and juristic persons in legal matters. They counsel clients, perform legal research.'
 
     Teacher DB 'teacher.bin', 0
 	Policer DB 'police.bin',0
@@ -264,12 +267,18 @@
 		LEA BX , Data_F
 		Draw BX,WIDTH,HEIGHT,0,0
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
-		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h
 
+		Print Lawyer_Jop,91,27,3,04
+		Print Lawyer_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+
+        call Print_NUM
+		Print Jops[28],7,29,12,5 ;answer
+        Print Jops[21],7,29,14,7
+		Print Jops[42],7,29,16,9
+      
+        MOV dh,31H
+		call Check_answer
 ;   _____    _                               
 ;  |  __ \  | |                              
 ;  | |__) | | |   __ _   _   _    ___   _ __ 
