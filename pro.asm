@@ -66,6 +66,8 @@
 	One           db '1-'
 	Two           db '2-'
 	Three         db '3-'
+	TRUE          DB 'TRUE  ANSWER','$'
+	FALSE         DB 'WRONG ANSWER','$'
 
 	               
 
@@ -150,13 +152,16 @@
 		Print Teacher_Jop,81,27,3,04
 		Print Teacher_Jop_c,84,27,5,04
 		Print Guess_who,16,65,8,14
-		
-		Print Jops,7,29,12,2
-        Print Jops[7],7,29,14,2
-		Print Jops[14],7,29,16,2
+
+		Print Jops,7,29,12,5
+        Print Jops[7],7,29,14,7
+		Print Jops[14],7,29,16,9
         call Print_NUM
-         MOV AH , 0
-         INT 16h
+
+        MOV dh,31H
+		call Check_answer
+       
+
 
 
 ;    ____    ______   ______   _                      
@@ -431,8 +436,44 @@ Print_NUM PROC
 Print One,2,27,12,2 
 Print Two,2,27,14,2	
 Print Three,2,27,16,2
-
+ret
 Print_NUM endp
+
+Check_answer PROC
+DEFAULT_CHECK:  
+
+			MOV AH , 0      ;WAIT FOR KEY
+			INT 16h
+		
+			CMP AL,dh        ;answer
+			JE TRUE_ANSWER	
+			
+			CMP AL, 30h
+			Jl DEFAULT_CHECK   ;wrong_key
+            
+			CMP AL, 33h
+			JG DEFAULT_CHECK   ;wrong_key
+
+	WRONG_ANSWER:
+			;Print FALSE,12,40,20,2	
+		mov ah,2 
+		mov dl,43h
+		mov dh,11h 
+		int 10h 
+
+		mov ah, 9 
+		mov dx,offset FALSE
+		int 21h 		
+		JMP   RETURN_CHECK
+
+	TRUE_ANSWER:
+			Print TRUE,12,65,18,2	
+			
+RETURN_CHECK:
+         MOV AH , 0
+         INT 16h
+	ret
+Check_answer endp
   END MAIN 
 
 
