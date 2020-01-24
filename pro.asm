@@ -29,7 +29,7 @@
 ; \________|\_______  /____|   /_______  /
 ;                   \/                 \/ 
 ; 	
-    Jops DB 'Teacher','Policer','Doctor','Soldier','Lawyer','Player','Actor'
+    Jops DB 'Teacher','Policer','Doctor ','Soldier','Lawyer ','Player ','Actor  '
 	Teacher_Jop   db 'I help people to learn,work in a classroom.I teach young children in kindergarten'
     Teacher_Jop_c db 'and primary schools. I teach older children in middle, junior high and high schools.'
      
@@ -62,6 +62,11 @@
 ;  \______  /\____/|__|_|  /__|_|  /\____/|___|  /
 ;         \/             \/      \/            \/ 
 	Guess_who     db 'Guess Who .....?'
+	Score         db 0
+	One           db '1-'
+	Two           db '2-'
+	Three         db '3-'
+
 	               
 
 	.CODE
@@ -134,15 +139,22 @@
 ;     | |     / _ \  / _` |  / __| | '_ \   / _ \ | '__|
 ;     | |    |  __/ | (_| | | (__  | | | | |  __/ | |   
 ;     |_|     \___|  \__,_|  \___| |_| |_|  \___| |_|   
-	 JOPS_MODE:   call Video_mode
+	 JOPS_MODE: 
+	    call Video_mode
 		OpenFile Teacher,Filehandle
 		ReadData Filehandle,Data_F,WIDTH,HEIGHT
 		LEA BX , Data_F
 		Draw BX,WIDTH,HEIGHT,0,0
 		CloseFile Filehandle
+
 		Print Teacher_Jop,81,27,3,04
 		Print Teacher_Jop_c,84,27,5,04
 		Print Guess_who,16,65,8,14
+		
+		Print Jops,7,29,12,2
+        Print Jops[7],7,29,14,2
+		Print Jops[14],7,29,16,2
+        call Print_NUM
          MOV AH , 0
          INT 16h
 
@@ -414,6 +426,13 @@ Video_mode PROC
 	ret	
 Video_mode endp
 
+Print_NUM PROC
+
+Print One,2,27,12,2 
+Print Two,2,27,14,2	
+Print Three,2,27,16,2
+
+Print_NUM endp
   END MAIN 
 
 
