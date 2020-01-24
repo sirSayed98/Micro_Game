@@ -47,8 +47,13 @@
 ; \____|__  /___|  /__|__|_|  (____  /____/____  >
 ;         \/     \/         \/     \/          \/ 
     Animals DB 'Lion','Bear','Elephant','Monkey','Horse','Zebra','Camel'
-    Lion DB 'Lion.bin', 0
-    Bear DB 'Bear.bin', 0
+    Lion      DB 'Lion.bin', 0
+    Bear      DB 'Bear.bin', 0
+	Elephant  DB 'Elephant.bin', 0
+	Horse    DB 'Horse.bin', 0
+	Zebra     DB 'Zebra.bin', 0
+	Camel     DB 'Camel.bin', 0
+    Monkey  DB 'Monkey.bin', 0
 
 ; ________                                       
 ; \_   ___ \  ____   _____   _____   ____   ____  
@@ -263,6 +268,12 @@
 
 
 Animals_MODE: 
+; ____    .__               
+; |    |   |__| ____   ____  
+; |    |   |  |/  _ \ /    \ 
+; |    |___|  (  <_> )   |  \
+; |_______ \__|\____/|___|  /
+;         \/              \/ 
         call Video_mode
 		OpenFile Lion,Filehandle
 		ReadData Filehandle,Data_F,WIDTH,HEIGHT
@@ -276,7 +287,12 @@ Animals_MODE:
 		Print Guess_who,16,65,8,14
          MOV AH , 0
          INT 16h
-
+; __________                     
+; \______   \ ____ _____ _______ 
+;  |    |  _// __ \\__  \\_  __ \
+;  |    |   \  ___/ / __ \|  | \/
+;  |______  /\___  >____  /__|   
+;         \/     \/     \/    
 		call Video_mode
 		OpenFile Bear,Filehandle
 		ReadData Filehandle,Data_F,WIDTH,HEIGHT
@@ -291,8 +307,102 @@ Animals_MODE:
          MOV AH , 0
          INT 16h
                                              
-                                             
-
+;  \_   _____/|  |   ____ ______ |  |__ _____    _____/  |_ 
+;  |    __)_ |  | _/ __ \\____ \|  |  \\__  \  /    \   __\
+;  |        \|  |_\  ___/|  |_> >   Y  \/ __ \|   |  \  |  
+; /_______  /|____/\___  >   __/|___|  (____  /___|  /__|  
+;         \/           \/|__|        \/     \/     \/                                               
+        call Video_mode
+		OpenFile Elephant,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		pusha
+		Draw BX,WIDTH,HEIGHT,0,0
+		popa
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h
+; _________                       .__   
+; \_   ___ \_____    _____   ____ |  |  
+; /    \  \/\__  \  /     \_/ __ \|  |  
+; \     \____/ __ \|  Y Y  \  ___/|  |__
+;  \______  (____  /__|_|  /\___  >____/
+;         \/     \/      \/     \/      
+		call Video_mode
+		OpenFile Camel,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		pusha
+		Draw BX,WIDTH,HEIGHT,0,0
+		popa
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h
+;    _____                 __                 
+;   /     \   ____   ____ |  | __ ____ ___.__.
+;  /  \ /  \ /  _ \ /    \|  |/ // __ <   |  |
+; /    Y    (  <_> )   |  \    <\  ___/\___  |
+; \____|__  /\____/|___|  /__|_ \\___  > ____|
+;         \/            \/     \/    \/\/     
+		call Video_mode
+		OpenFile Monkey,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		pusha
+		Draw BX,WIDTH,HEIGHT,0,0
+		popa
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h
+;   ___ ___                             
+;  /   |   \  ___________  ______ ____  
+; /    ~    \/  _ \_  __ \/  ___// __ \ 
+; \    Y    (  <_> )  | \/\___ \\  ___/ 
+;  \___|_  / \____/|__|  /____  >\___  >
+;        \/                   \/     \/ 
+                       
+		call Video_mode
+		OpenFile Horse,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		pusha
+		Draw BX,WIDTH,HEIGHT,0,0
+		popa
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h
+; _________    ___.                 
+; \____    /____\_ |______________   
+;   /     // __ \| __ \_  __ \__  \  
+;  /     /\  ___/| \_\ \  | \// __ \_
+; /_______ \___  >___  /__|  (____  /
+;         \/   \/    \/           \/ 
+                                          
+		call Video_mode
+		OpenFile Zebra,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		pusha
+		Draw BX,WIDTH,HEIGHT,0,0
+		popa
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h
 
 
 
