@@ -50,6 +50,9 @@
 	 
 	Player_Job_c   db '   playing one position, such as goalkeeper, striker, defender or mid-fielder.'
 
+	 Actor_Job db 'They express ideas and portray characters in theater, film, television, and other performing arts.'
+	 Actor_Job_c db 'They also work at theme parks or other live events. They interpret a writers script to entertain.'
+
     Teacher DB 'teacher.bin', 0
 	Policer DB 'police.bin',0
 	Doctor  DB 'doctor.bin',0
@@ -105,6 +108,7 @@
 		;   mov ah,0
 		;   mov al,03
 		;   int 10h 
+	MAIN_MENUE:
 		pusha
 		call Video_mode
 		popa
@@ -325,12 +329,19 @@
 		Draw BX,WIDTH,HEIGHT,0,0
 		popa
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
-		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h 
 
+		Print Actor_Job,98,27,3,04
+		Print Actor_Job_c,97,27,5,04
+		Print Guess_who,16,65,8,14
+
+        call Print_NUM
+		Print Jops[14],7,29,12,5 
+        Print Jops[0],7,29,14,7
+		Print Jops[42],7,29,16,9;answer
+      
+        MOV dh,33H
+		call Check_answer
+		JMP MAIN_MENUE
 
 
 Animals_MODE: 
