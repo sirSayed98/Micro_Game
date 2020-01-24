@@ -46,13 +46,17 @@
 	Lawyer_Jop db 'They, also known as Attorneys, are certified professionals who advise and represent natural'
 	Lawyer_Jop_c db 'and juristic persons in legal matters. They counsel clients, perform legal research.'
 
+	Player_Job     db 'Their job involves working and training as a team. Most footballers specialise in '
+	 
+	Player_Job_c   db '   playing one position, such as goalkeeper, striker, defender or mid-fielder.'
+
     Teacher DB 'teacher.bin', 0
 	Policer DB 'police.bin',0
 	Doctor  DB 'doctor.bin',0
 	Soldier db 'soldier.bin',0
-	Lawyer db 'lawyer.bin',0
-    Player db 'player.bin',0
-	Actor  db 'actor.bin',0
+	Lawyer db  'lawyer.bin',0
+    Player db  'player.bin',0
+	Actor  db  'actor.bin',0
 ;    .__          
 ;   /  _  \   ____ |__| _____ _____  |  |   ______
 ;  /  /_\  \ /    \|  |/     \\__  \ |  |  /  ___/
@@ -295,11 +299,17 @@
 		Draw BX,WIDTH,HEIGHT,0,0
 		popa
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
+		Print Player_Job,82,29,3,04
+		Print Player_Job_c,78,27,5,04
 		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h 
+
+        call Print_NUM
+		Print Jops[7],7,29,12,5 
+        Print Jops[21],7,29,14,7
+		Print Jops[35],7,29,16,9;answer
+      
+        MOV dh,33H
+		call Check_answer
 		
 ;    _____          __                
 ;   /  _  \   _____/  |_  ___________ 
