@@ -30,11 +30,18 @@
 ;                   \/                 \/ 
 ; 	
     Jops DB 'Teacher','Policer','Doctor ','Soldier','Lawyer ','Player ','Actor  '
+
 	Teacher_Jop   db 'I help people to learn,work in a classroom.I teach young children in kindergarten'
     Teacher_Jop_c db 'and primary schools. I teach older children in middle, junior high and high schools.'
 
 	Policer_Jop   db ' He protects citizens by preventing crime, enforcing laws, apprehending '
 	Policer_Jop_c db 'suspects, and monitoring traffic.He apprehends suspects by responding to calls for help.'
+
+	Doctor_Jop    db 'They also known as Physicians, are licensed health professionals who maintain and   '
+	Doctor_Jop_c  db 'restore human health through the practice of medicine and they examine patients.'
+
+	Soldier_Jop   db 'He is a person who serves in the army the branch of armed forces '
+	Soldier_Jop_c db ' trained for land warfare.They perform duties such as maintaining military equipment.'       
 
     Teacher DB 'teacher.bin', 0
 	Policer DB 'police.bin',0
@@ -192,7 +199,7 @@
 		MOV dh,32H
 		call Check_answer
 
-;  _____                   _                  
+;   _____                   _                  
 ;  |  __ \                 | |                 
 ;  | |  | |   ___     ___  | |_    ___    _ __ 
 ;  | |  | |  / _ \   / __| | __|  / _ \  | '__|
@@ -206,11 +213,18 @@
 		Draw BX,WIDTH,HEIGHT,0,0
 		popa 
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
+		Print Doctor_Jop,81,27,3,04
+		Print Doctor_Jop_c,80,27,5,04
 		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h 
+		
+        
+		call Print_NUM
+		Print Jops[35],7,29,12,5
+        Print Jops[28],7,29,14,7 
+		Print Jops[14],7,29,16,9;answer
+
+		MOV dh,33H
+		call Check_answer
 
 ;   _____       _     _ _           
 ;  / ____|     | |   | (_)          
@@ -225,11 +239,17 @@
 		LEA BX , Data_F
 		Draw BX,WIDTH,HEIGHT,0,0
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
+		Print Soldier_Jop,66,35,3,04
+		Print Soldier_Jop_c,85,27,5,04
 		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h
+
+        call Print_NUM
+		Print Jops[42],7,29,12,5 
+        Print Jops[21],7,29,14,7;answer
+		Print Jops,7,29,16,9
+      
+        MOV dh,32H
+		call Check_answer
 ;   _                                               
 ;  | |                                              
 ;  | |        __ _  __      __  _   _    ___   _ __ 
