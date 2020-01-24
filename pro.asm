@@ -3,6 +3,22 @@
 	.STACK 64
 	.386
 	.DATA
+                                                               
+;    _____                          ________          __          
+;   /     \   ____   ____  __ __    \______ \ _____ _/  |______   
+;  /  \ /  \_/ __ \ /    \|  |  \    |    |  \\__  \\   __\__  \  
+; /    Y    \  ___/|   |  \  |  /    |    `   \/ __ \|  |  / __ \_
+; \____|__  /\___  >___|  /____/____/_______  (____  /__| (____  /
+;         \/     \/     \/    /_____/       \/     \/          \/ 
+   
+
+  Learn         db 'L E A R N  B Y  P I C T U R E','$'
+
+   Learn_Jops    db '1-Learn Jops','$'
+   Learn_Animals db '2-Learn Animals','$'
+   
+
+
     WIDTH EQU 200
 	HEIGHT EQU 300
 	Data_F DB WIDTH*HEIGHT dup(0)
@@ -12,6 +28,7 @@
 	Soldier db 'soldier.bin',0
 	Lawyer db 'lawyer.bin',0
     Player db 'player.bin',0
+	Actor  db 'actor.bin',0
 	Filehandle DW ?
 	Jops DB 'Teacher','Policer','Doctor','Soldier','Lawyer','Player','Actor'
 	Guess_who     db 'Guess Who .....?'
@@ -22,7 +39,7 @@
 	.CODE
 	 ; __  __     _     ___   _  _ 
 	 ;|  \/  |   /_\   |_ _| | \| |
-	 ;| |\/| |  / _ \   | |  | .` |
+	 ;| |\/| |  / _ \   | |  |    |
 	 ;|_|  |_| /_/ \_\ |___| |_|\_|
 								  
 	;MAIN MENUE
@@ -31,10 +48,55 @@
 		MOV AX, @DATA
 		MOV DS, AX	
 		Mov es,ax 
-     ;open text mode(80*25)
-		;  mov ah,0
-		;  mov al,03
-		;  int 10h 
+		PUSHA
+   ; open text mode(80*25)
+		;   mov ah,0
+		;   mov al,03
+		;   int 10h 
+		pusha
+		call Video_mode
+		popa
+
+		mov ah,2 
+		mov dl,30h
+		mov dh,5h 
+		int 10h 
+
+		mov ah, 9 
+		mov dx, offset Learn 
+		int 21h 
+
+        mov ah,2 
+		mov dl,36h
+		mov dh,10h 
+		int 10h 
+
+		mov ah, 9 
+		mov dx, offset Learn_Jops
+		int 21h
+
+		mov ah,2 
+		mov dl,35h
+		mov dh,13h 
+		int 10h 
+		
+		mov ah, 9 
+		mov dx, offset Learn_Animals
+		int 21h 
+
+
+	DEFAULTG:  
+
+			MOV AH , 0      ;WAIT FOR KEY
+			INT 16h
+		
+			CMP AL, 31h     ;JOPS_MODE
+			JE JOPS_MODE
+			
+			CMP AL, 32h
+			JE Animals_MODE   ;Animals_MODE 
+			
+			JMP DEFAULTG
    
   
 
@@ -44,7 +106,7 @@
 ;     | |     / _ \  / _` |  / __| | '_ \   / _ \ | '__|
 ;     | |    |  __/ | (_| | | (__  | | | | |  __/ | |   
 ;     |_|     \___|  \__,_|  \___| |_| |_|  \___| |_|   
-	    call Video_mode
+	 JOPS_MODE:   call Video_mode
 		OpenFile Teacher,Filehandle
 		ReadData Filehandle,Data_F,WIDTH,HEIGHT
 		LEA BX , Data_F
@@ -154,7 +216,33 @@
 		Print Guess_who,16,65,8,14
          MOV AH , 0
          INT 16h 
+		
+;    _____          __                
+;   /  _  \   _____/  |_  ___________ 
+;  /  /_\  \_/ ___\   __\/  _ \_  __ \
+; /    |    \  \___|  | (  <_> )  | \/
+; \____|__  /\___  >__|  \____/|__|   
+;         \/     \/                   
+		call Video_mode
+		OpenFile Actor,Filehandle
+		ReadData Filehandle,Data_F,WIDTH,HEIGHT
+		LEA BX , Data_F
+		pusha
+		Draw BX,WIDTH,HEIGHT,0,0
+		popa
+		CloseFile Filehandle
+		Print Teacher_Jop,81,27,3,04
+		Print Teacher_Jop_c,84,27,5,04
+		Print Guess_who,16,65,8,14
+         MOV AH , 0
+         INT 16h 
 
+
+		 
+Animals_MODE: 
+  call Video_mode
+  mov ah,0
+  int 16h
 
                                              
                                              
