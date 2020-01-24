@@ -32,7 +32,10 @@
     Jops DB 'Teacher','Policer','Doctor ','Soldier','Lawyer ','Player ','Actor  '
 	Teacher_Jop   db 'I help people to learn,work in a classroom.I teach young children in kindergarten'
     Teacher_Jop_c db 'and primary schools. I teach older children in middle, junior high and high schools.'
-     
+
+	Policer_Jop   db ' He protects citizens by preventing crime, enforcing laws, apprehending '
+	Policer_Jop_c db 'suspects, and monitoring traffic.He apprehends suspects by responding to calls for help.'
+
     Teacher DB 'teacher.bin', 0
 	Policer DB 'police.bin',0
 	Doctor  DB 'doctor.bin',0
@@ -152,12 +155,12 @@
 		Print Teacher_Jop,81,27,3,04
 		Print Teacher_Jop_c,84,27,5,04
 		Print Guess_who,16,65,8,14
-
-		Print Jops,7,29,12,5
+  
+        call Print_NUM
+		Print Jops,7,29,12,5 ;answer
         Print Jops[7],7,29,14,7
 		Print Jops[14],7,29,16,9
-        call Print_NUM
-
+      
         MOV dh,31H
 		call Check_answer
        
@@ -176,11 +179,18 @@
 		LEA BX , Data_F
 		Draw BX,WIDTH,HEIGHT,0,0
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
+
+		Print Policer_Jop,72,27,3,04
+		Print Policer_Jop_c,88,27,5,04
 		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h
+
+		call Print_NUM
+		Print Jops[21],7,29,12,5
+        Print Jops[7],7,29,14,7 ;answer
+		Print Jops[14],7,29,16,9
+
+		MOV dh,32H
+		call Check_answer
 
 ;  _____                   _                  
 ;  |  __ \                 | |                 
@@ -455,7 +465,7 @@ DEFAULT_CHECK:
 			JG DEFAULT_CHECK   ;wrong_key
 
 	WRONG_ANSWER:
-			;Print FALSE,12,40,20,2	
+	
 		mov ah,2 
 		mov dl,43h
 		mov dh,11h 
@@ -467,7 +477,15 @@ DEFAULT_CHECK:
 		JMP   RETURN_CHECK
 
 	TRUE_ANSWER:
-			Print TRUE,12,65,18,2	
+		mov ah,2 
+		mov dl,43h
+		mov dh,11h 
+		int 10h 
+
+		mov ah, 9 
+		mov dx,offset TRUE
+		int 21h 		
+		JMP   RETURN_CHECK	
 			
 RETURN_CHECK:
          MOV AH , 0
