@@ -89,7 +89,7 @@
 
 	Horse_Info DB 'Horses are adapted to run, allowing them to quickly escape predators, possessing an excellent'
 
-	Horse_Info_c DB ' sense of balance and a strong fight or flight response. They eat grass'
+	Horse_Info_c DB ' sense of balance and a strong fight or flight response. They eat grass.'
 
     Camel_Info DB 'They do not directly store water in their humps they are reservoirs of fatty tissue. Concentrating '
 
@@ -100,6 +100,8 @@
 
 	Elephant_Info_c DB 'Males leave their family groups when they reach puberty, and may live alone or with other males.'
 
+	Zebra_Info db 'They are several species of African horse family united by their distinctive black and white.'
+	Zebra_Info_c db 'They love running and eat grass.'
 
 ; ________                                       
 ; \_   ___ \  ____   _____   _____   ____   ____  
@@ -514,11 +516,17 @@ Animals_MODE:
 		Draw BX,WIDTH,HEIGHT,0,0
 		popa
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
+		Print Horse_Info,93,27,3,04
+		Print Horse_Info_c,72,27,5,04
 		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h
+
+        call Print_NUM
+		Print Animals[0],6,29,12,5
+        Print Animals[18],6,29,14,7;answer
+		Print Animals[36],8,29,16,9 
+		
+		MOV dh,32H
+		call Check_answer
 ; _________    ___.                 
 ; \____    /____\_ |______________   
 ;   /     // __ \| __ \_  __ \__  \  
@@ -534,13 +542,19 @@ Animals_MODE:
 		Draw BX,WIDTH,HEIGHT,0,0
 		popa
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
+		Print Zebra_Info,93,32,3,04
+		Print Zebra_Info_c,32,54,5,04
 		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h
 
+        call Print_NUM
+		Print Animals[24],6,29,12,5;answer
+        Print Animals[36],8,29,14,7
+		Print Animals[18],6,29,16,9 
+		
+		MOV dh,31H
+		call Check_answer
 
+		jmp MAIN_MENUE
 
 
 Video_mode PROC
