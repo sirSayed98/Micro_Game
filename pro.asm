@@ -79,9 +79,9 @@
 
 	Lion_Info_c DB 'It is the king of the forest. It loves Meat.'
 	
-	Bear_Info DB 'Bears are carnivoran mammals of the family Ursidae. They are classified doglike carnivorans'
+	Bear_Info DB 'They are carnivoran mammals of the family Ursidae. They are classified doglike carnivorans. '
 
-	Bear_Info_c DB 'Bears have been hunted since prehistoric times for their meat and fur.They love fish and dance'
+	Bear_Info_c DB 'Bears have been hunted for their meat and fur.They love fish and dance.'
 
 	Monkey_Info DB 'They are species of mammals, in part, the simians of infraorder Simiiformes.'
 
@@ -397,7 +397,7 @@ Animals_MODE:
       
         MOV dh,31H
 		call Check_answer
-		JMP MAIN_MENUE
+	
 ; __________                     
 ; \______   \ ____ _____ _______ 
 ;  |    |  _// __ \\__  \\_  __ \
@@ -412,11 +412,18 @@ Animals_MODE:
 		Draw BX,WIDTH,HEIGHT,0,0
 		popa
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
+		Print Bear_Info,91,27,3,04
+		Print Bear_Info_c,71,27,5,04
 		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h
+
+        call Print_NUM
+		Print Animals[24],6,29,12,5
+        Print Animals[18],6,29,14,7
+		Print Animals[6],6,29,16,9;answer 
+      
+        MOV dh,33H
+		call Check_answer
+		
                                              
 ;  \_   _____/|  |   ____ ______ |  |__ _____    _____/  |_ 
 ;  |    __)_ |  | _/ __ \\____ \|  |  \\__  \  /    \   __\
