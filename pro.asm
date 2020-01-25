@@ -91,9 +91,9 @@
 
 	Horse_Info_c DB ' sense of balance and a strong fight or flight response. They eat grass'
 
-    Camel_Info DB 'They do not directly store water in their humps they are reservoirs of fatty tissue. Concentrating body fat in their'
+    Camel_Info DB 'They do not directly store water in their humps they are reservoirs of fatty tissue. Concentrating '
 
-	Camel_Info_c DB 'humps minimizes the insulating effect fat would have if distributed over the rest of their bodies.'
+	Camel_Info_c DB 'body fat in their humps minimizes effect fat would have if distributed over the rest of their bodies.'
 
 
 	Elephant_Info DB 'They are mammals of the family Elephantidae and the largest existing land animals.'
@@ -463,11 +463,17 @@ Animals_MODE:
 		Draw BX,WIDTH,HEIGHT,0,0
 		popa
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
+		Print Camel_Info,99,27,3,04
+		Print Camel_Info_c,101,26,5,04
 		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h
+
+        call Print_NUM
+		Print Animals[6],6,29,12,5
+        Print Animals[24],6,29,14,7
+		Print Animals[30],6,29,16,9;answer 
+		
+		MOV dh,33H
+		call Check_answer
 ;    _____                 __                 
 ;   /     \   ____   ____ |  | __ ____ ___.__.
 ;  /  \ /  \ /  _ \ /    \|  |/ // __ <   |  |
