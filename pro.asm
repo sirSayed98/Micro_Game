@@ -116,6 +116,7 @@
 	Three         db '3-'
 	TRUE          DB 'TRUE  ANSWER','$'
 	FALSE         DB 'WRONG ANSWER','$'
+	Your_Score    DB 'YOUR SCORE:','$'
 
 	               
 
@@ -190,7 +191,8 @@
 ;     | |     / _ \  / _` |  / __| | '_ \   / _ \ | '__|
 ;     | |    |  __/ | (_| | | (__  | | | | |  __/ | |   
 ;     |_|     \___|  \__,_|  \___| |_| |_|  \___| |_|   
-	 JOPS_MODE: 
+	 JOPS_MODE:
+	 Mov score,0 
 	    call Video_mode
 		OpenFile Teacher,Filehandle
 		ReadData Filehandle,Data_F,WIDTH,HEIGHT
@@ -379,6 +381,7 @@ Animals_MODE:
 ; |    |___|  (  <_> )   |  \
 ; |_______ \__|\____/|___|  /
 ;         \/              \/ 
+        Mov score,0
         call Video_mode
 		OpenFile Lion,Filehandle
 		ReadData Filehandle,Data_F,WIDTH,HEIGHT
@@ -589,6 +592,7 @@ DEFAULT_CHECK:
 
 	WRONG_ANSWER:
 	
+	  call Print_Score
 		mov ah,2 
 		mov dl,43h
 		mov dh,11h 
@@ -600,6 +604,8 @@ DEFAULT_CHECK:
 		JMP   RETURN_CHECK
 
 	TRUE_ANSWER:
+	    INC SCORE
+		call Print_Score
 		mov ah,2 
 		mov dl,43h
 		mov dh,11h 
@@ -615,6 +621,37 @@ RETURN_CHECK:
          INT 16h
 	ret
 Check_answer endp
+
+Print_Score PROC
+        MOV DL,7H              ;COL
+		MOV DH,24             ;ROW
+		MOV BH,0               ;PAGE
+		MOV AH,02H
+		INT 10H               ;EXECUTE MOVE CURSOR
+
+        mov ah, 9 
+		mov dx,offset Your_Score
+		int 21h 
+
+
+		MOV DL,13H              ;COL
+		MOV DH,24             ;ROW
+		MOV BH,0               ;PAGE
+		MOV AH,02H
+		INT 10H               ;EXECUTE MOVE CURSOR
+
+
+			
+		MOV BL,4              ;COLOR
+		MOV AL,SCORE          ;OFFSET
+
+		ADD AL,'0'
+		MOV AH,0EH            ;EXECUTE PRINTING 
+		INT 10H   
+		ret
+Print_Score endp
+
+
   END MAIN 
 
 
