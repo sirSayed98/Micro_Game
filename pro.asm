@@ -66,14 +66,40 @@
 ; /    |    \   |  \  |  Y Y  \/ __ \|  |__\___ \ 
 ; \____|__  /___|  /__|__|_|  (____  /____/____  >
 ;         \/     \/         \/     \/          \/ 
-    Animals DB 'Lion','Bear','Elephant','Monkey','Horse','Zebra','Camel'
+    Animals DB 'Lion  ','Bear  ','Monkey','Horse ','Zebra ','Camel ','Elephant'
     Lion      DB 'Lion.bin', 0
     Bear      DB 'Bear.bin', 0
 	Elephant  DB 'Elephant.bin', 0
-	Horse    DB 'Horse.bin', 0
+	Horse     DB 'Horse.bin', 0
 	Zebra     DB 'Zebra.bin', 0
 	Camel     DB 'Camel.bin', 0
-    Monkey  DB 'Monkey.bin', 0
+    Monkey    DB 'Monkey.bin', 0
+
+	Lion_Info DB 'It is a species in the family Felidae it is a muscular, deep-chested cat with a short, rounded head.'
+
+	Lion_Info_c DB 'It is the king of the forest. It loves Meat.'
+	
+	Bear_Info DB 'Bears are carnivoran mammals of the family Ursidae. They are classified doglike carnivorans'
+
+	Bear_Info_c DB 'Bears have been hunted since prehistoric times for their meat and fur.They love fish and dance'
+
+	Monkey_Info DB 'They are species of mammals, in part, the simians of infraorder Simiiformes.'
+
+	Monkey_Info_c DB 'They love climbing and eat Bananas.'
+
+	Horse_Info DB 'Horses are adapted to run, allowing them to quickly escape predators, possessing an excellent'
+
+	Horse_Info_c DB ' sense of balance and a strong fight or flight response. They eat grass'
+
+    Camel_Info DB 'They do not directly store water in their humps they are reservoirs of fatty tissue. Concentrating body fat in their'
+
+	Camel_Info_c DB 'humps minimizes the insulating effect fat would have if distributed over the rest of their bodies.'
+
+
+	Elephant_Info DB 'They are mammals of the family Elephantidae and the largest existing land animals.'
+
+	Elephant_Info_c DB 'Males leave their family groups when they reach puberty, and may live alone or with other males.'
+
 
 ; ________                                       
 ; \_   ___ \  ____   _____   _____   ____   ____  
@@ -359,11 +385,19 @@ Animals_MODE:
 		Draw BX,WIDTH,HEIGHT,0,0
 		popa
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
+
+		Print Lion_Info,100,27,3,04
+		Print Lion_Info_c,44,50,5,04
 		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h
+
+        call Print_NUM
+		Print Animals[0],6,29,12,5;answer 
+        Print Animals[6],6,29,14,7
+		Print Animals[12],6,29,16,9
+      
+        MOV dh,31H
+		call Check_answer
+		JMP MAIN_MENUE
 ; __________                     
 ; \______   \ ____ _____ _______ 
 ;  |    |  _// __ \\__  \\_  __ \
