@@ -438,11 +438,17 @@ Animals_MODE:
 		Draw BX,WIDTH,HEIGHT,0,0
 		popa
 		CloseFile Filehandle
-		Print Teacher_Jop,81,27,3,04
-		Print Teacher_Jop_c,84,27,5,04
+		Print Elephant_Info,82,36,3,04
+		Print Elephant_Info_c,96,26,5,04
 		Print Guess_who,16,65,8,14
-         MOV AH , 0
-         INT 16h
+
+        call Print_NUM
+		Print Animals[24],6,29,12,5
+        Print Animals[36],8,29,14,7;asnwer
+		Print Animals[12],6,29,16,9 
+      
+        MOV dh,32H
+		call Check_answer
 ; _________                       .__   
 ; \_   ___ \_____    _____   ____ |  |  
 ; /    \  \/\__  \  /     \_/ __ \|  |  
